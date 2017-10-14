@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Link Shortner</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h1>Shorten the links!</h1>
+                <h2>Make them more easy on the eyes</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="twelve columns">
+                <form action="/" method="post">
+                    <input type="url" placeholder="Paste link here" pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$" name="link" required>
+                    <button class="button button-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <%block name="link"/>
+    </div>
+</body>
+
+</html>

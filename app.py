@@ -1,8 +1,8 @@
 import string
 import random
 
-from bottle import Bottle, run
-from bottle import mako_view as view, static_file
+from bottle import Bottle, run, request, redirect, abort
+from bottle import mako_view as view, mako_template as template, static_file
 from bottle.ext import sqlite
 
 app = Bottle()
@@ -21,8 +21,29 @@ def gen_id(size=8, chars=string.ascii_letters + string.digits):
 @app.get('/')
 @view('index.html')
 def index():
-    id = gen_id()
-    return dict(id=id)
+    return dict()
+
+
+@app.post('/')
+def index(db):
+    link = request.forms.get('link')
+    print(link)
+    generated_id = gen_id()
+    #row = db.execute('SELECT * from links where link_id=?', generate_id).fetchone()
+    db.execute("INSERT INTO links values (?, ?)", (generated_id, link))
+    shortened = "localhost:8080/" + generated_id
+    return template("index_with_link.html", short_link=shortened)
+
+
+@app.get('/<id:re:[a-zA-Z0-9]{8}>')
+def redirect_to(id, db):
+    print(id)
+    row = db.execute('SELECT * from links where link_id=?', (id, )).fetchone()
+    print(row)
+    if row:
+        redirect(row[1])
+    else:
+        abort(404, "No page found")
 
 
 @app.get('/static/<filename:path>')
