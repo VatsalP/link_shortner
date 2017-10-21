@@ -1,0 +1,27 @@
+body {
+    text-align: center;
+    background-color: #dcd1d1;
+}
+
+.header {
+    margin-top: 10%
+}
+
+h1{
+    font-family: 'Bungee', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-family: 'Kreon', serif;
+    font-size: 20px;
+}
+
+.content {
+    margin-top: 5%;
+}
+
+input {
+    color: #000
+}

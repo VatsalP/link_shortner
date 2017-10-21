@@ -5,27 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="A web service to shorten your links."/>
     <title>Link Shortner</title>
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Kreon" rel="stylesheet"> 
+    <link rel="stylesheet" href="/static/css/skeleton.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row header">
             <div class="twelve columns">
                 <h1>Shorten the links!</h1>
-                <h2>Make them more easy on the eyes</h2>
+                <p>Make them more easy on the eyes</p>
             </div>
         </div>
-        <div class="row">
-            <div class="twelve columns">
+        <div class="row ">
+            <div class="twelve columns content">
                 <form action="/" method="post">
                     <input type="url" placeholder="Paste link here" pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$" name="link" required>
                     <button class="button button-primary">Submit</button>
                 </form>
             </div>
+            <%block name="link"/>
         </div>
-        <%block name="link"/>
+        <div class="twelve columns footer">
+            <footer>
+                <p>&copy; Copyright 2016 <a href="https://vatsalparekh.com">Vatsal Parekh</a></p>
+            </footer>
+        </div>
     </div>
 </body>
 
