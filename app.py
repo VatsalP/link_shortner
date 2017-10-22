@@ -1,14 +1,13 @@
 import string
 import random
+import sqlite3
 
 from bottle import Bottle, run, request, redirect, abort
 from bottle import mako_view as view, mako_template as template, static_file
-from bottle.ext import sqlite
+from bottle_utils import csrf
 
 app = Bottle()
-plugin = sqlite.Plugin(dbfile="./link_shortner.db")
-app.install(plugin)
-
+app.config.load_config('./app.conf')
 
 def gen_id(size=8, chars=string.ascii_letters + string.digits):
     """ Generates link_id
@@ -20,26 +19,32 @@ def gen_id(size=8, chars=string.ascii_letters + string.digits):
 
 @app.get('/')
 @view('index.html')
+@csrf.csrf_token
 def index():
-    return dict()
+    return dict(csrf_tag=csrf.csrf_tag())
 
 
 @app.post('/')
-def index(db):
+@csrf.csrf_protect
+def index():
+    db = sqlite3.connect('link_shortner.db')
+    c = db.cursor()
     link = request.forms.get('link')
-    print(link)
     generated_id = gen_id()
     #row = db.execute('SELECT * from links where link_id=?', generate_id).fetchone()
-    db.execute("INSERT INTO links values (?, ?)", (generated_id, link))
+    c.execute("INSERT INTO links values (?, ?)", (generated_id, link))
+    db.commit()
+    db.close()
     shortened = "localhost:8080/" + generated_id
-    return template("index_with_link.html", short_link=shortened)
+    return template("index_with_link.html", short_link=shortened, csrf_tag=csrf.csrf_tag())
 
 
 @app.get('/<id:re:[a-zA-Z0-9]{8}>')
-def redirect_to(id, db):
-    print(id)
-    row = db.execute('SELECT * from links where link_id=?', (id, )).fetchone()
-    print(row)
+def redirect_to(id):
+    db = sqlite3.connect('link_shortner.db')
+    c = db.cursor()
+    row = c.execute('SELECT * from links where link_id=?', (id, )).fetchone()
+    db.close()
     if row:
         redirect(row[1])
     else:

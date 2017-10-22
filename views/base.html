@@ -24,6 +24,7 @@
         <div class="row ">
             <div class="twelve columns content">
                 <form action="/" method="post">
+                    ${ csrf_tag }
                     <input type="url" placeholder="Paste link here" pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$" name="link" required>
                     <button class="button button-primary">Submit</button>
                 </form>
