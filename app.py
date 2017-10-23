@@ -28,6 +28,7 @@ def index():
 
 @app.post('/')
 @view('index_with_link.html')
+@csrf.csrf_token
 @csrf.csrf_protect
 def index_with_links():
     """post request that the form link uses
