@@ -40,7 +40,7 @@ def index_with_links():
     c.execute("INSERT INTO links values (?, ?)", (generated_id, link))
     db.commit()
     db.close()
-    shortened = "localhost:8080/" + generated_id
+    shortened = app.config.get('info.hostname', 'localhost:8080') + '/' + generated_id
     return dict(short_link=shortened, csrf_tag=csrf.csrf_tag())
 
 
