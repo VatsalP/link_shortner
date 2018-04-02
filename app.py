@@ -81,6 +81,7 @@ def error404(error):
     """
     return dict()
 
+application = app
 
 if __name__ == '__main__':
     run(app, host='localhost', port=8080, debug=True)
