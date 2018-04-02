@@ -102,4 +102,3 @@ ENV/
 
 .vscode/
 *.db
-app.conf
